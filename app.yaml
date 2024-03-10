@@ -9,6 +9,7 @@ spec:
   source: 
     repoURL: https://github.com/LukeTwo/first-pipeline
     targetRevision: HEAD
+    path: first
 
   destination:
     server: https://kubernetes.default.svc
