@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: myapp-argo-application
+  namespace: argocd
+spec:
+  project: default
+
+  source: 
+    repoURL: https://github.com/LukeTwo/first-pipeline
+    targetRevision: HEAD
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+
+    automated:
+      selfHeak: true
+      prune: true
