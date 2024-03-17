@@ -14,10 +14,12 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: luketw/first-pipeline:v1
+          image: luketestreg.azurecr.io/myapp
           ports:
             - containerPort: 80
               name: myapp
+      imagePullSecrets:
+        - name: acr-secret
 ---
 kind: Service
 apiVersion: v1
