@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: luketestreg.azurecr.io/myapp
+          image: luketw/first-pipeline:v2
           ports:
             - containerPort: 80
               name: myapp
