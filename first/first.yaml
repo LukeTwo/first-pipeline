@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: luketw/first-pipeline:v1
+          image: luketw/first-pipeline:v2
           ports:
             - containerPort: 80
               name: myapp
