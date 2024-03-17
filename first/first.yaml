@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: luketestreg.azurecr.io/myapp:latest
+          image: luketestreg.azurecr.io/myapp:latest #test
           ports:
             - containerPort: 80
               name: myapp
