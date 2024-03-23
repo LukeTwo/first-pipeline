@@ -62,8 +62,8 @@ jobs:
       - name: Connect to Azure Container Registry (ACR)
         id: acrconnect
         run: |
-          echo "Retrieving access token from luketesreg"
-          TOKEN=$(az acr login -n luketesreg --expose-token)
+          echo "Retrieving access token from luketestreg"
+          TOKEN=$(az acr login -n luketestreg --expose-token)
 
           if [ -z "$TOKEN" ]
           then
