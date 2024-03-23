@@ -13,10 +13,6 @@
 name: App Deploy First - GitOps
 
 on:
-  push:
-    paths:
-      - 'appcode/**'
-      
   workflow_dispatch:
     inputs:
       ACRNAME:
