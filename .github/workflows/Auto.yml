@@ -41,7 +41,7 @@ permissions:
 jobs:
   BuildPush:
     runs-on: ubuntu-latest
-    environment: ${{ prod }}
+    environment: prod
     steps:
     
       # Get application code from repo
@@ -62,8 +62,8 @@ jobs:
       - name: Connect to Azure Container Registry (ACR)
         id: acrconnect
         run: |
-          echo "Retrieving access token from ${{ luketestreg}}"
-          TOKEN=$(az acr login -n ${{ luketestreg}} --expose-token)
+          echo "Retrieving access token from luketesreg"
+          TOKEN=$(az acr login -n luketesreg --expose-token)
 
           if [ -z "$TOKEN" ]
           then
@@ -83,15 +83,15 @@ jobs:
       # Builds and Pushes the container image to the Azure Container Registry (ACR)
       - name: Container build and push to a Azure Container Registry (ACR)
         env:
-          APPNAME: "${{ first }}"
+          APPNAME: "first"
         run: |
           # cd "appcode"
-          docker build . -t ${{ luketestreg }}.azurecr.io/${{ first }}:${{ github.run_number }}
-          docker push ${{ luketestreg }}.azurecr.io/${{ first }}:${{ github.run_number }}
+          docker build . -t luketestreg.azurecr.io/first:${{ github.run_number }}
+          docker push luketestreg.azurecr.io/first:${{ github.run_number }}
   Update-K8s-Manifests:
     name: Update K8s Deployment Manifest with Image Version
     needs: BuildPush
-    environment: ${{ prod }}
+    environment: prod
     runs-on: ubuntu-latest
     steps:
 
@@ -104,7 +104,7 @@ jobs:
         inlineScript: |
           $line = Get-Content first/first.yaml | Select-String image: | Select-Object -ExpandProperty Line
           $content = Get-Content first/first.yaml
-          $content | ForEach-Object {$_ -replace $line,"          image: ${{ luketestreg }}.azurecr.io/${{ first }}:${{ github.run_number }}"} | Set-Content first/first.yaml
+          $content | ForEach-Object {$_ -replace $line,"          image: luketestreg.azurecr.io/first:${{ github.run_number }}"} | Set-Content first/first.yaml
         azPSVersion: "latest"
 
     - name: Commit changes in manifest to repo
