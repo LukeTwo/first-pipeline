@@ -99,7 +99,7 @@ jobs:
         inlineScript: |
           $line = Get-Content first/first.yaml | Select-String image: | Select-Object -ExpandProperty Line
           $content = Get-Content first/first.yaml
-          $content | ForEach-Object {$_ -replace $line,"        image: ${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}"} | Set-Content first/first.yaml
+          $content | ForEach-Object {$_ -replace $line,"          image:${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}"} | Set-Content first/first.yaml
         azPSVersion: "latest"
 
     - name: Commit changes in manifest to repo
