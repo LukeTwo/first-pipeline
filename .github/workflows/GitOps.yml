@@ -82,4 +82,30 @@ jobs:
         run: |
           # cd "appcode"
           docker build . -t ${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}
-          
+          docker push ${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}
+  Update-K8s-Manifests:
+    name: Update K8s Deployment Manifest with Image Version
+    needs: BuildPush
+    environment: ${{ inputs.Environment }}
+    runs-on: ubuntu-latest
+    steps:
+
+    # Checks out the baseline repository
+    - uses: actions/checkout@v2
+
+    - name: Update image name in manifest file
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          $line = Get-Content first/first.yaml | Select-String image: | Select-Object -ExpandProperty Line
+          $content = Get-Content first/first.yaml
+          $content | ForEach-Object {$_ -replace $line,"        image: ${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}"} | Set-Content first/first.yaml
+        azPSVersion: "latest"
+
+    - name: Commit changes in manifest to repo
+      run: | 
+        git config user.name "GitHub Actions Bot"
+        git config user.email ""
+        git add first/first.yaml
+        git commit -m "Update image version in K8s Deployment manifests file"
+        git push origin
