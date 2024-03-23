@@ -15,7 +15,7 @@ name: App Deploy First - GitOps
 on:
   push:
     paths:
-      - 'first/**'
+      - 'appcode/**'
       
   workflow_dispatch:
     inputs:
