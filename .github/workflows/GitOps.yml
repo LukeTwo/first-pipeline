@@ -17,6 +17,7 @@ on:
     inputs:
       ACRNAME:
         description: 'The Name of the ACR resource'
+        default: 'luketestreg'
         required: true
         type: string
       APPNAME:
