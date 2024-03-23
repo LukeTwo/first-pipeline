@@ -12,7 +12,11 @@
 # It is split into separate jobs for readability but could be squashed into a single job if that best suits your scenario.
 name: App Deploy First - GitOps
 
-on: 
+on:
+  push:
+    paths:
+      - 'first.yaml'
+      
   workflow_dispatch:
     inputs:
       ACRNAME:
