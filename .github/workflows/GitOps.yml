@@ -10,7 +10,7 @@
 # This workflow demonstrates building and pushing a container image to an Azure Container Registry.
 # The workflow then updates the necessary Kubernetes manifest deployment files in the GitHub repo so that a GitOps operator can sync them to deploy an application to an Azure Kubernetes Service cluster.
 # It is split into separate jobs for readability but could be squashed into a single job if that best suits your scenario.
-name: App Deploy Flask - GitOps
+name: App Deploy First - GitOps
 
 on: 
   workflow_dispatch:
@@ -21,7 +21,7 @@ on:
         type: string
       APPNAME:
         description: 'The Name of the Application to deploy'
-        default: "flask"
+        default: "First"
         required: true
         type: string
       ENVIRONMENT:
@@ -98,8 +98,8 @@ jobs:
       uses: azure/powershell@v1
       with:
         inlineScript: |
-          $line = Get-Content workloads/flask/deployment.yaml | Select-String image: | Select-Object -ExpandProperty Line
-          $content = Get-Content workloads/flask/deployment.yaml
+          $line = Get-Content first/first.yaml | Select-String image: | Select-Object -ExpandProperty Line
+          $content = Get-Content first/first.yaml
           $content | ForEach-Object {$_ -replace $line,"        image: ${{ inputs.ACRNAME }}.azurecr.io/${{ inputs.APPNAME }}:${{ github.run_number }}"} | Set-Content first/first.yaml
         azPSVersion: "latest"
     
