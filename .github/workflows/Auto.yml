@@ -12,11 +12,13 @@
 # It is split into separate jobs for readability but could be squashed into a single job if that best suits your scenario.
 name: Auto App Deploy First - GitOps
 
+# This automatically initiates the workflow when a push is made to the 'appcode' folder
 on:
   push:
     paths:
       - 'appcode/**'
-      
+
+  # These are fields to fill out when manually initating the workflow through github site
   workflow_dispatch:
     inputs:
       ACRNAME:
@@ -38,7 +40,10 @@ permissions:
       id-token: write
       contents: write
 
+
 jobs:
+# This job will take my app code from this repo, login to my azure using secrets I have set up in this enviroment
+# Then it will build a docker image based on this code and push the image to my azure repo with the version number equaling the workflow ID
   BuildPush:
     runs-on: ubuntu-latest
     environment: prod
@@ -88,6 +93,9 @@ jobs:
           # cd "appcode"
           docker build . -t luketestreg.azurecr.io/first:${{ github.run_number }}
           docker push luketestreg.azurecr.io/first:${{ github.run_number }}
+
+  # This job will go to my kubernetes manifest file and update the version number of my image to equal the new build no.
+  # This allows ArgoCD that's running in my kubernetes cluster to detect the version change and update the cluster as needed
   Update-K8s-Manifests:
     name: Update K8s Deployment Manifest with Image Version
     needs: BuildPush
