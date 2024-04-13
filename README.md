@@ -17,6 +17,8 @@ Let's start with azure, I'll assume you have an account setup:
 1. Create a resource group.
 
 2. Create a kubernetes cluster, you can change the parameter names and VM model as you need. I chose to have 1 node and a cheap VM to reduce costs.
+```
+
     $ az aks create `
     --resource-group Test `
     --name akstest `
@@ -25,17 +27,18 @@ Let's start with azure, I'll assume you have an account setup:
     --load-balancer-sku basic `
     --node-vm-size "Standard_B2s_v2" `
     --generate-ssh-keys
+```
 
-3. Install kubectl on the AKBS.
+4. Install kubectl on the AKBS.\
     https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
 
-4. Install ArgoCD to your AKBS.
+5. Install ArgoCD to your AKBS.\
     https://foxutech.medium.com/setup-argocd-on-azure-kubernetes-services-9c3fa543f4b6
 
-5. Create a container registry and repository
-    Type 'container registries' into the search bar and hit 'create'
+6. Create a container registry and repository.\
+    Type 'container registries' into the search bar and hit 'create'.
     Inside your new container registry, create a repository.
 
 And GitHub:
-6. Follow instructions 1 - 5 on this page to set up a connection between Azure and GitHub
+6. Follow instructions 1 - 5 on this page to set up a connection between Azure and GitHub\
     https://github.com/Azure/aks-baseline-automation/blob/main/workloads/docs/app-flask-push-dockerbuild.md
