@@ -39,6 +39,6 @@ Let's start with azure, I'll assume you have an account setup:
     Type 'container registries' into the search bar and hit 'create'.
     Inside your new container registry, create a repository.
 
-And GitHub:
-6. Follow instructions 1 - 5 on this page to set up a connection between Azure and GitHub\
+And GitHub:\
+6. Follow instructions 1 - 5 on this page to set up a connection between Azure and GitHub.\
     https://github.com/Azure/aks-baseline-automation/blob/main/workloads/docs/app-flask-push-dockerbuild.md
